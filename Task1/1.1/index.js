@@ -4,8 +4,8 @@ const reverser = new Transform ({
   transform: (data, encoding, callback) => {
     callback(
       null,
-      data.
-      toString('utf8')
+      data
+      .toString('utf8')
       .replace(/\n/, "") // excludes input \n from reverse process
       .split("")
       .reverse()
