@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "task1.1": "nodemon Task1/1.1/index.js",
     "task1.2:pipeline": "nodemon Task1/1.2/pipeline.js",

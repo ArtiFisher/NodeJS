@@ -1,9 +1,5 @@
-const csv = require('csvtojson');
-const fs = require('fs');
-
-const filename = 'Task1/1.2/csv/Example'
-const input = `${filename}.csv`
-const output = `${filename}.txt`
+import fs from 'fs';
+import { input, output } from './config.js';
 
 csv()
 .on('error', console.error)
