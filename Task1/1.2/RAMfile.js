@@ -1,3 +1,4 @@
+import csv from 'csvtojson';
 import fs from 'fs';
 import { input, output } from './config.js';
 
