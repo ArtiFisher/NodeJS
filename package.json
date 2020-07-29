@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "task1": "nodemon Task1/1.1/index.js",
-    "task2": "nodemon Task1/1.2/index.js"
+    "task1.1": "nodemon Task1/1.1/index.js",
+    "task1.2:pipeline": "nodemon Task1/1.2/pipeline.js",
+    "task1.2:ram": "nodemon Task1/1.2/RAMfile.js"
   },
   "repository": {
     "type": "git",
