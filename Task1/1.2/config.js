@@ -1,4 +1,6 @@
-const filename = 'Task1/1.2/csv/Example';
+const path = require('path');
+
+const filename = path.resolve(__dirname, 'csv/Example')
 
 export const input = `${filename}.csv`;
 export const output = `${filename}.txt`;
