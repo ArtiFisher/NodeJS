@@ -1,7 +1,8 @@
 const csv = require('csvtojson');
 const fs = require('fs');
+const path = require('path');
 
-const filename = 'Task1/1.2/csv/Example'
+const filename = path.resolve(__dirname, 'csv/Example')
 const input = `${filename}.csv`
 const output = `${filename}.txt`
 
