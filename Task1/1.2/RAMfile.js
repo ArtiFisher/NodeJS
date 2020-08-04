@@ -1,9 +1,6 @@
 import csv from 'csvtojson';
 import fs from 'fs';
 import { input, output } from './config.js';
-const path = require('path');
-
-const filename = path.resolve(__dirname, 'csv/Example')
 
 csv()
 .on('error', console.error)
