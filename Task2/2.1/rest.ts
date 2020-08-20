@@ -18,14 +18,19 @@ const users: Map<string, User> = new Map();
 
 const userRouter = express.Router();
 
-userRouter.get('/', (req, res) => {
-    console.log(Array.from(users.values()));
-    res.json(Array.from(users.values()));
-});
-
 userRouter.post('/', (req, res) => {
     users.set(req.body.id, req.body);
     res.sendStatus(HttpStatus.CREATED);
+});
+
+userRouter.get('/', (req, res) => {
+    res.json(Array.from(users.values()));
+});
+
+userRouter.get('/autosuggest', (req, res) => {
+    res.json(Array.from(users.values())
+        .filter(({ login }) => login?.includes(req.query.substr as string))
+        .slice(0, parseInt(req.query.limit as string, 10)));
 });
 
 userRouter.get('/:uid', (req, res) => {

@@ -10,5 +10,6 @@
 * create user - POST /user/
 * read all - GET /user
 * read single - GET /user/{id}
+* autosuggest - GET /user/autosuggest?substr={loginSubstring}&limit={limit}
 * update user info - PATCH /user/{id}
 * delete soft - DELETE /user/{id}
