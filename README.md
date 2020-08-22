@@ -8,7 +8,7 @@
 # Task2
 
 * create user - POST /user/
-* read all(without soft deleted) - GET /user
+* read all - GET /user
 * read single - GET /user/{id}
 * autosuggest - GET /user/autosuggest?substr={loginSubstring}&limit={limit}
 * update user info - PATCH /user/{id}

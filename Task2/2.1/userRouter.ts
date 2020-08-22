@@ -10,7 +10,7 @@ userRouter.post('/', (req, res) => {
 });
 
 userRouter.get('/', (req, res) => {
-    res.json(Array.from(users.values()).filter(({ isDeleted }) => !isDeleted));
+    res.json(Array.from(users.values()));
 });
 
 userRouter.get('/autosuggest', (req, res) => {
