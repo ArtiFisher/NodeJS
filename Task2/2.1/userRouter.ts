@@ -1,15 +1,6 @@
 import express from 'express';
 import * as HttpStatus from 'http-status-codes';
-
-type User = {
-    id: string;
-    login: string;
-    password: string;
-    age: number;
-    isDeleted: boolean;
-};
-
-const users: Map<string, User> = new Map();
+import users from './users';
 
 const userRouter = express.Router();
 
