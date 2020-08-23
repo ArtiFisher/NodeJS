@@ -7,7 +7,7 @@
     "task1.1": "nodemon --exec babel-node -- Task1/1.1/index.js",
     "task1.2:pipeline": "nodemon --exec babel-node -- Task1/1.2/pipeline.js",
     "task1.2:ram": "nodemon --exec babel-node -- Task1/1.2/RAMfile.js",
-    "task2.1": "nodemon --exec babel-node -- Task2/2.1/rest.ts --extensions \".ts\"",
+    "task2": "nodemon --exec babel-node -- Task2/rest.ts --extensions \".ts\"",
     "es": "eslint Task2/2.1/rest.ts"
   },
   "repository": {
