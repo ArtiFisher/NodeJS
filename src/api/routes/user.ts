@@ -14,27 +14,37 @@ export default (app: Router) => {
 
     route.post('/',
         validator.body(user.schema),
-        loginValidator(user.data.getAll()),
-        (req, res) => {
-            user.data.createUser(req.body);
+        loginValidator,
+        async (req, res) => {
+            await user.data.add(req.body);
             res.sendStatus(HttpStatus.CREATED);
         });
 
-    route.get('/', (req: Request, res: Response) => res.json(user.data.getAll()));
+    route.get('/', async (req: Request, res: Response) => {
+        const result = await user.data.getAll();
+        console.log(result);
+        res.json(result);
+    });
 
-    route.get('/autosuggest', (req: Request, res: Response) => res.json(user.data.find(req.query.substr, req.query.limit)));
+    route.get('/autosuggest', async (req: Request, res: Response) => {
+        const result = await user.data.find(req.query.string as string, parseInt(req.query.limit as string, 10));
+        res.json(result);
+    });
 
-    route.get('/:uid', (req: Request, res: Response) => res.json(user.data.getById(req.params.uid)));
+    route.get('/:uid', async (req: Request, res: Response) => {
+        const result = await user.data.getById(req.params.uid);
+        res.json(result);
+    });
 
     route.patch('/:uid',
         validator.body(user.schema),
-        (req: Request, res: Response) => {
-            user.data.change(req.params.uid, req.body);
+        async (req: Request, res: Response) => {
+            await user.data.change(req.params.uid, req.body);
             res.sendStatus(HttpStatus.ACCEPTED);
         });
 
-    route.delete('/:uid', (req: Request, res: Response) => {
-        user.data.delete(req.params.uid);
+    route.delete('/:uid', async (req: Request, res: Response) => {
+        await user.data.delete(req.params.uid);
         res.sendStatus(HttpStatus.ACCEPTED);
     });
 };

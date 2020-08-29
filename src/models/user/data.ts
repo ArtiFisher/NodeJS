@@ -1,41 +1,43 @@
-import usersMock from './dataMock';
 // eslint-disable-next-line no-unused-vars
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from './IUser';
+import { database } from '../../config';
+import dataMapper from '../dataMapper';
 
 class Users {
-    data: Map<string, IUser>;
-
-    constructor() {
-        this.data = new Map(usersMock);
-    }
-
-    createUser(body: IUser) {
-        this.data.set(body.id, body);
-        return body.id;
+    add(body: IUser) {
+        return database('users').insert(dataMapper(body));
     }
 
     getAll() {
-        return Array.from(this.data.values());
+        return database('users');
+    }
+
+    getByLogin(login: string) {
+        return database('users')
+            .where({ login });
     }
 
     getById(id: string) {
-        return this.data.get(id);
+        return database('users')
+            .where({ id });
     }
 
-    find(substr, limit) {
-        return this.getAll()
-            .filter(({ login }) => login?.includes(substr))
-            .slice(0, parseInt(limit, 10));
+    find(substr: string, limit: number) {
+        return database('users')
+            .whereRaw(`POSITION('${substr}' in login) > 0`)
+            .limit(limit);
     }
 
-    change(id, body) {
-        this.data.set(id, { ...this.data.get(id), ...body });
-        return true;
+    change(id: string, body: IUser) {
+        return database('users')
+            .where({ id })
+            .update(dataMapper(body));
     }
 
-    delete(id) {
-        this.data.set(id, { ...this.data.get(id), isDeleted: true });
-        return true;
+    delete(id: string) {
+        return database('users')
+            .where({ id })
+            .update({ isdeleted: true });
     }
 }
 
