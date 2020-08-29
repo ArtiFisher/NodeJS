@@ -4,7 +4,6 @@ import * as HttpStatus from 'http-status-codes';
 import { createValidator } from 'express-joi-validation';
 import user from '../../models/user';
 import loginValidator from '../middlewares/loginValidator';
-import users from '../../models/user/data';
 
 const validator = createValidator();
 
@@ -15,27 +14,27 @@ export default (app: Router) => {
 
     route.post('/',
         validator.body(user.schema),
-        loginValidator(users.getAll()),
+        loginValidator(user.data.getAll()),
         (req, res) => {
-            users.createUser(req.body);
+            user.data.createUser(req.body);
             res.sendStatus(HttpStatus.CREATED);
         });
 
-    route.get('/', (req: Request, res: Response) => res.json(users.getAll()));
+    route.get('/', (req: Request, res: Response) => res.json(user.data.getAll()));
 
-    route.get('/autosuggest', (req: Request, res: Response) => res.json(users.find(req.query.substr, req.query.limit)));
+    route.get('/autosuggest', (req: Request, res: Response) => res.json(user.data.find(req.query.substr, req.query.limit)));
 
-    route.get('/:uid', (req: Request, res: Response) => res.json(users.getById(req.params.uid)));
+    route.get('/:uid', (req: Request, res: Response) => res.json(user.data.getById(req.params.uid)));
 
     route.patch('/:uid',
         validator.body(user.schema),
         (req: Request, res: Response) => {
-            users.change(req.params.uid, req.body);
+            user.data.change(req.params.uid, req.body);
             res.sendStatus(HttpStatus.ACCEPTED);
         });
 
     route.delete('/:uid', (req: Request, res: Response) => {
-        users.delete(req.params.uid);
+        user.data.delete(req.params.uid);
         res.sendStatus(HttpStatus.ACCEPTED);
     });
 };

@@ -1,7 +1,7 @@
 import schema from './schema';
-import users from './data';
+import data from './data';
 
 export default {
     schema,
-    users
+    data
 };
