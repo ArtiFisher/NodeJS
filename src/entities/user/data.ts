@@ -1,3 +1,5 @@
+import usersMock from './dataMock';
+
 type User = {
     id: string;
     login: string;
@@ -6,6 +8,6 @@ type User = {
     isDeleted: boolean;
 };
 
-const users: Map<string, User> = new Map();
+const users: Map<string, User> = new Map(usersMock);
 
 export default users;

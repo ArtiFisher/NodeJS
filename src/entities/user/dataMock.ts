@@ -12,13 +12,6 @@ const mockUsersMap = [['2', {
     'age': 37,
     'isDeleted': false
 }],
-['4', {
-    'id': '4',
-    'login': 'artqe4',
-    'password': '143',
-    'age': 47,
-    'isDeleted': false
-}],
 ['1', {
     'id': '1',
     'login': 'art1',
