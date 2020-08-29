@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "task1.1": "nodemon --exec babel-node -- Task1/1.1/index.js",
-    "task1.2:pipeline": "nodemon --exec babel-node -- Task1/1.2/pipeline.js",
-    "task1.2:ram": "nodemon --exec babel-node -- Task1/1.2/RAMfile.js",
-    "task2": "nodemon --exec babel-node -- Task2/rest.ts --extensions \".ts\""
+    "start": "nodemon --exec babel-node -- src/app.ts --extensions \".ts\""
   },
   "repository": {
     "type": "git",
@@ -21,14 +18,14 @@
   "homepage": "https://github.com/ArtiFisher/NodeJS#readme",
   "devDependencies": {
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
+    "@babel/core": "^7.11.4",
     "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
     "@types/hapi__joi": "^17.1.4",
-    "@typescript-eslint/eslint-plugin": "^3.9.0",
-    "@typescript-eslint/parser": "^3.9.0",
-    "eslint": "^7.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "nodemon": "^2.0.4",
