@@ -2,7 +2,9 @@
 import { Router, Request, Response } from 'express';
 import * as HttpStatus from 'http-status-codes';
 import { createValidator } from 'express-joi-validation';
-import user from '../../entities/user';
+import user from '../../models/user';
+import loginValidator from '../middlewares/loginValidator';
+import users from '../../models/user/data';
 
 const validator = createValidator();
 
@@ -13,31 +15,27 @@ export default (app: Router) => {
 
     route.post('/',
         validator.body(user.schema),
-        user.loginValidator,
+        loginValidator(users.getAll()),
         (req, res) => {
-            user.data.set(req.body.id, req.body);
+            users.createUser(req.body);
             res.sendStatus(HttpStatus.CREATED);
         });
 
-    route.get('/', (req: Request, res: Response) => res.json(Array.from(user.data.values())));
+    route.get('/', (req: Request, res: Response) => res.json(users.getAll()));
 
-    route.get('/autosuggest', (req: Request, res: Response) =>
-        res.json(Array.from(user.data.values())
-            .filter(({ login }) => login?.includes(req.query.substr as string))
-            .slice(0, parseInt(req.query.limit as string, 10)))
-    );
+    route.get('/autosuggest', (req: Request, res: Response) => res.json(users.find(req.query.substr, req.query.limit)));
 
-    route.get('/:uid', (req: Request, res: Response) => res.json(user.data.get(req.params.uid)));
+    route.get('/:uid', (req: Request, res: Response) => res.json(users.getById(req.params.uid)));
 
     route.patch('/:uid',
         validator.body(user.schema),
         (req: Request, res: Response) => {
-            user.data.set(req.params.uid, { ...user.data.get(req.params.uid), ...req.body });
+            users.change(req.params.uid, req.body);
             res.sendStatus(HttpStatus.ACCEPTED);
         });
 
     route.delete('/:uid', (req: Request, res: Response) => {
-        user.data.set(req.params.uid, { ...user.data.get(req.params.uid), isDeleted: true });
+        users.delete(req.params.uid);
         res.sendStatus(HttpStatus.ACCEPTED);
     });
 };
