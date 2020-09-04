@@ -1,8 +1,6 @@
 import knex from 'knex';
 
-const DB_URL = 'postgres://pbrqydwx:7EJDAau16x4krX1LCgHEoXvsufY8PWWV@kandula.db.elephantsql.com:5432/pbrqydwx';
-
 export const database = knex({
     client: 'pg',
-    connection: DB_URL
+    connection: `${process.env.DB_DIALECT}://${process.env.DB_API_KEY}:${process.env.DB_PORT}/${process.env.DB_PASSWORD}`
 });
