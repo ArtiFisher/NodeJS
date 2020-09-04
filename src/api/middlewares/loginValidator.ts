@@ -1,11 +1,16 @@
+// eslint-disable-next-line no-unused-vars
+import { Request, Response } from 'express';
 import * as HttpStatus from 'http-status-codes';
+import user from '../../models/user';
 
-export default dataArray => (req, res, next) => {
-    const allLogins = dataArray.map(({ login }) => login);
-    // login must not already exist in provided dataArray
-    if (allLogins.includes(req.body.login)) {
-        res.status(HttpStatus.BAD_REQUEST).json('User with this login already exists.');
-    } else {
-        return next();
+export default (req: Request, res: Response, next: Function) => {
+    user.data.getByLogin(req.body.login).then(result => {
+        // login must not already exist
+        if (result.length > 0) {
+            res.status(HttpStatus.BAD_REQUEST).json('User with this login already exists.');
+        } else {
+            return next();
+        }
     }
+    );
 };

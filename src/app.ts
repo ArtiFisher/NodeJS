@@ -1,6 +1,9 @@
 import express from 'express';
 import router from './api';
 import * as HttpStatus from 'http-status-codes';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
