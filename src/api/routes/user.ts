@@ -7,38 +7,43 @@ import loginValidator from '../middlewares/loginValidator';
 
 const validator = createValidator();
 
-const route = Router();
+const router = Router();
 
-export default (app: Router) => {
-    app.use('/user', route);
-
-    route.post('/',
+router
+    .route('/')
+    .post(
         validator.body(user.schema),
         loginValidator,
         async (req, res) => {
             await user.data.add(req.body);
             res.sendStatus(HttpStatus.CREATED);
         })
-        .get('/autosuggest', async (req: Request, res: Response) => {
-            const result = await user.data.find(req.query.string as string, parseInt(req.query.limit as string, 10));
-            res.json(result);
-        })
-        .get('/', async (req: Request, res: Response) => {
-            const result = await user.data.getAll();
-            res.json(result);
-        })
-        .get('/:uid', async (req: Request, res: Response) => {
-            const result = await user.data.getById(req.params.uid);
-            res.json(result);
-        })
-        .patch('/:uid',
-            validator.body(user.schema),
-            async (req: Request, res: Response) => {
-                await user.data.change(req.params.uid, req.body);
-                res.sendStatus(HttpStatus.ACCEPTED);
-            })
-        .delete('/:uid', async (req: Request, res: Response) => {
-            await user.data.delete(req.params.uid);
+    .get(async (req: Request, res: Response) => {
+        const result = await user.data.getAll();
+        res.json(result);
+    });
+
+router
+    .route('/:uid')
+    .get(async (req: Request, res: Response) => {
+        const result = await user.data.getById(req.params.uid);
+        res.json(result);
+    })
+    .patch(validator.body(user.schema),
+        async (req: Request, res: Response) => {
+            await user.data.change(req.params.uid, req.body);
             res.sendStatus(HttpStatus.ACCEPTED);
-        });
-};
+        })
+    .delete(async (req: Request, res: Response) => {
+        await user.data.delete(req.params.uid);
+        res.sendStatus(HttpStatus.ACCEPTED);
+    });
+
+router
+    .route('/autosuggest')
+    .get(async (req: Request, res: Response) => {
+        const result = await user.data.find(req.query.string as string, parseInt(req.query.limit as string, 10));
+        res.json(result);
+    });
+
+export default router;
