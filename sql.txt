@@ -1,0 +1,34 @@
+CREATE TABLE Users (
+    id SERIAL UNIQUE,
+    login varchar(255),
+    password varchar(255),
+    age int,
+    isDeleted BOOLEAN
+);
+
+INSERT INTO users(login, password, age, isDeleted)
+VALUES
+('mylogin', 'mypassword', 60, false),
+('anonymous', 'nopassword!', 15, false),
+('Darvin', 'Croft', 40, false)
+
+CREATE TABLE Groups(
+    id SERIAL UNIQUE,
+    name varchar,
+    permissions varchar array
+);
+
+INSERT INTO groups(name, permissions) VALUES ('Gamers', '{"READ", "WRITE"}'), ('Chess club', '{"READ"}')
+
+CREATE TABLE UserGroup (
+  group_id int,
+  user_id int,
+  PRIMARY KEY (user_id, group_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (group_id) REFERENCES groups(id) ON UPDATE CASCADE ON DELETE CASCADE
+)
+
+INSERT INTO usergroup(group_id, user_id)
+VALUES
+(1, 2),
+(2, 3)
