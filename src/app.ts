@@ -1,4 +1,5 @@
-import express from 'express';
+// eslint-disable-next-line no-unused-vars
+import express, { NextFunction, Request, Response } from 'express';
 import router from './api';
 import * as HttpStatus from 'http-status-codes';
 import dotenv from 'dotenv';
@@ -12,18 +13,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', router());
 
-app.use((err, req, res, next) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     if (err && err.error && err.error.isJoi) {
         res.status(HttpStatus.BAD_REQUEST).json({
             type: err.type,
             message: err.error.toString()
         });
-    } else {
-        return next(err);
     }
+    return next(err);
 });
 
-app.listen(5000, (err: any) => {
+app.listen(5000, (err: Error) => {
     if (err) {
         console.log('error starting server', err);
         return;
