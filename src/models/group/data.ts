@@ -10,10 +10,8 @@ class Groups {
     }
 
     addUsers(group_id: number, userIds: Array<number>) {
-        return database.transaction(async trx => {
-            const inserts = await trx('usergroup').insert(userIds.map(user_id => ({ group_id, user_id })));
-            console.log(`${inserts.length} users added.`);
-        });
+        // transaction is used here, even though it's quite useless since it updates a single table in one query
+        return database.transaction(async trx => trx('usergroup').insert(userIds.map(user_id => ({ group_id, user_id }))));
     }
 
     getAll() {
