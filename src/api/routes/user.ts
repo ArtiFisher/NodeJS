@@ -25,7 +25,6 @@ export default (app: Router) => {
         })
         .get('/', async (req: Request, res: Response) => {
             const result = await user.data.getAll();
-            console.log(result);
             res.json(result);
         })
         .get('/:uid', async (req: Request, res: Response) => {
