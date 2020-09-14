@@ -8,7 +8,7 @@ const validator = createValidator();
 
 const router = Router();
 
-router.route('/group')
+router.route('/')
     .post(validator.body(group.schema),
         async (req, res) => {
             await group.data.add(req.body);

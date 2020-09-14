@@ -4,8 +4,8 @@ import group from './routes/group';
 
 export default () => {
     const app = Router();
-    user(app);
-    group(app);
+    app.use('/users', user);
+    app.use('/groups', group);
 
     return app;
 };
