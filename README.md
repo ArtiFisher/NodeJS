@@ -2,17 +2,26 @@
 
 # CRUD operations
 
-* create user - POST /user/
-* read all - GET /user
-* read single - GET /user/{id}
-* autosuggest - GET /user/autosuggest?substr={loginSubstring}&limit={limit}
-* update user info - PATCH /user/{id}
-* delete softly - DELETE /user/{id}
+* create user - POST /users
+* read all user - GET /users
+* read single user by id - GET /users/{id}
+* autosuggest - GET /users/autosuggest?substr={loginSubstring}&limit={limit}
+* update user info - PATCH /users/{id}
+* delete user(soft) - DELETE /users/{id}
 
 
-For debugging purposes Postman was used with x-www-form-urlencoded with body like this:
-id:2
-login:art2
-password:1234s
-age:27
-isDeleted:false
+* create group - POST /groups
+* read all groups - GET /groups
+* read single group by id - GET /groups/{id}
+* update group info - PATCH /groups/{id}
+* delete group - DELETE /groups/{id}
+
+
+* add users to group - POST /groups/{groupId}/addUsers
+
+
+To connect to pregenerated online database create .env file with this content:
+DB_DIALECT=postgres
+DB_API_KEY=pbrqydwx:7EJDAau16x4krX1LCgHEoXvsufY8PWWV@kandula.db.elephantsql.com
+DB_PORT=5432
+DB_PASSWORD=pbrqydwx

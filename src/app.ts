@@ -14,11 +14,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', router());
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    if (err && err.error && err.error.isJoi) {
-        res.status(HttpStatus.BAD_REQUEST).json({
-            type: err.type,
-            message: err.error.toString()
-        });
+    if (err) {
+        const errorDetails = {
+            message: err
+        };
+        if (err.error && err.error.isJoi) {
+            errorDetails.message = err.error.toString();
+        }
+        res.status(HttpStatus.BAD_REQUEST).json(errorDetails);
     }
     return next(err);
 });

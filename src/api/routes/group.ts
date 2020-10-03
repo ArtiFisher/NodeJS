@@ -3,48 +3,42 @@ import { Router, Request, Response } from 'express';
 import * as HttpStatus from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
 import { createValidator } from 'express-joi-validation';
-import user from '../../models/user';
-import loginValidator from '../middlewares/loginValidator';
+import group from '../../models/group';
 
 const validator = createValidator();
 
 const router = Router();
 
-router
-    .route('/')
-    .post(
-        validator.body(user.schema),
-        loginValidator,
+router.route('/')
+    .post(validator.body(group.schema),
         asyncHandler(async (req, res) => {
-            await user.service.add(req.body);
+            await group.service.add(req.body);
             res.sendStatus(HttpStatus.CREATED);
         }))
     .get(asyncHandler(async (req: Request, res: Response) => {
-        const result = await user.service.getAll();
+        const result = await group.service.getAll();
         res.json(result);
     }));
 
-router
-    .route('/:uid')
+router.route('/:uid')
     .get(asyncHandler(async (req: Request, res: Response) => {
-        const result = await user.service.getById(req.params.uid);
+        const result = await group.service.getById(req.params.uid);
         res.json(result);
     }))
-    .patch(validator.body(user.schema),
+    .patch(validator.body(group.schema),
         asyncHandler(async (req: Request, res: Response) => {
-            await user.service.change(req.params.uid, req.body);
+            await group.service.change(req.params.uid, req.body);
             res.sendStatus(HttpStatus.ACCEPTED);
         }))
     .delete(asyncHandler(async (req: Request, res: Response) => {
-        await user.service.delete(req.params.uid);
+        await group.service.delete(req.params.uid);
         res.sendStatus(HttpStatus.ACCEPTED);
     }));
 
-router
-    .route('/autosuggest')
-    .get(asyncHandler(async (req: Request, res: Response) => {
-        const result = await user.service.find(req.query.string as string, parseInt(req.query.limit as string, 10));
-        res.json(result);
+router.route('/:uid/addUsers')
+    .post(asyncHandler(async (req: Request, res: Response) => {
+        await group.service.addUsers(parseInt(req.params.uid, 10), req.body.users);
+        res.sendStatus(HttpStatus.ACCEPTED);
     }));
 
 export default router;
