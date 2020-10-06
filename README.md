@@ -25,3 +25,5 @@ DB_DIALECT=postgres
 DB_API_KEY=pbrqydwx:7EJDAau16x4krX1LCgHEoXvsufY8PWWV@kandula.db.elephantsql.com
 DB_PORT=5432
 DB_PASSWORD=pbrqydwx
+
+add any AUTH_TOKEN to it like in .env.example
