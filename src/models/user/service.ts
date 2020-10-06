@@ -24,6 +24,12 @@ class UsersService {
 
     @logArgs
     @logErrors
+    async getByLogin(login: string) {
+        return await data.getByLogin(login);
+    }
+
+    @logArgs
+    @logErrors
     async change(id: string, body: IUser) {
         return await data.change(id, body);
     }
