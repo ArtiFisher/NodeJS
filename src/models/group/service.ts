@@ -1,44 +1,39 @@
 // eslint-disable-next-line no-unused-vars
 import { IGroup } from './IGroup';
-import { logArgs, logErrors } from '../../utils/decorators';
-import data from './data';
+import { database } from '../../config';
+import dataMapper from '../dataMapper';
 
-class GroupsService {
-    @logArgs
-    @logErrors
-    async add(body: IGroup) {
-        return await data.add(body);
+class Groups {
+    add(body: IGroup) {
+        return database('groups')
+            .insert(body);
     }
 
-    @logArgs
-    @logErrors
-    async getAll() {
-        return await data.getAll();
+    addUsers(group_id: number, userIds: Array<number>) {
+        // transaction is used here, even though it's quite useless since it updates a single table in one query
+        return database.transaction(async trx => trx('usergroup').insert(userIds.map(user_id => ({ group_id, user_id }))));
     }
 
-    @logArgs
-    @logErrors
-    async getById(id: string) {
-        return await data.getById(id);
+    getAll() {
+        return database('groups');
     }
 
-    @logArgs
-    @logErrors
-    async change(id: string, body: IGroup) {
-        return await data.change(id, body);
+    getById(id: string) {
+        return database('groups')
+            .where({ id });
     }
 
-    @logArgs
-    @logErrors
-    async delete(id: string) {
-        return await data.delete(id);
+    change(id: string, body: IGroup) {
+        return database('groups')
+            .where({ id })
+            .update(dataMapper(body));
     }
 
-    @logArgs
-    @logErrors
-    async addUsers(groupId: number, usersArray: Array<number>) {
-        return await data.addUsers(groupId, usersArray);
+    delete(id: string) {
+        return database('groups')
+            .where({ id })
+            .delete();
     }
 }
 
-export default new GroupsService();
+export default new Groups();

@@ -1,9 +1,9 @@
 import schema from './schema';
-import data from './data';
-import service from './service';
+import service from './controller';
+import controller from './controller';
 
 export default {
     schema,
-    data,
-    service
+    service,
+    controller
 };

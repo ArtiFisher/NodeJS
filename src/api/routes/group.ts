@@ -12,32 +12,32 @@ const router = Router();
 router.route('/')
     .post(validator.body(group.schema),
         asyncHandler(async (req, res) => {
-            await group.service.add(req.body);
+            await group.controller.add(req.body);
             res.sendStatus(HttpStatus.CREATED);
         }))
     .get(asyncHandler(async (req: Request, res: Response) => {
-        const result = await group.service.getAll();
+        const result = await group.controller.getAll();
         res.json(result);
     }));
 
 router.route('/:uid')
     .get(asyncHandler(async (req: Request, res: Response) => {
-        const result = await group.service.getById(req.params.uid);
+        const result = await group.controller.getById(req.params.uid);
         res.json(result);
     }))
     .patch(validator.body(group.schema),
         asyncHandler(async (req: Request, res: Response) => {
-            await group.service.change(req.params.uid, req.body);
+            await group.controller.change(req.params.uid, req.body);
             res.sendStatus(HttpStatus.ACCEPTED);
         }))
     .delete(asyncHandler(async (req: Request, res: Response) => {
-        await group.service.delete(req.params.uid);
+        await group.controller.delete(req.params.uid);
         res.sendStatus(HttpStatus.ACCEPTED);
     }));
 
 router.route('/:uid/addUsers')
     .post(asyncHandler(async (req: Request, res: Response) => {
-        await group.service.addUsers(parseInt(req.params.uid, 10), req.body.users);
+        await group.controller.addUsers(parseInt(req.params.uid, 10), req.body.users);
         res.sendStatus(HttpStatus.ACCEPTED);
     }));
 
