@@ -3,12 +3,16 @@ import service from './service';
 
 describe('User Controller', () => {
     const mock = jest.fn();
+    const testError = new Error('test');
+    const errorMock = jest.fn(() => {
+        throw testError;
+    });
 
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    it('add', async () => {
+    describe('add', () => {
         const testInput = {
             id: 'id',
             login: 'login',
@@ -16,39 +20,63 @@ describe('User Controller', () => {
             age: 10,
             isDeleted: true
         };
-        service.add = mock;
-        await controller.add(testInput);
+        it('should correctly process valid input', async () => {
+            service.add = mock;
+            await controller.add(testInput);
 
-        expect(mock).toBeCalledTimes(1);
-        expect(mock).toBeCalledWith(testInput);
+            expect(mock).toBeCalledTimes(1);
+            expect(mock).toBeCalledWith(testInput);
+        });
+        it('should correctly process error', async () => {
+            service.add = errorMock;
+
+            expect(controller.add(testInput)).rejects.toEqual(testError);
+        });
     });
+    describe('getAllUsers', () => {
+        it('should correctly process valid input', async () => {
+            service.getAll = mock;
+            await controller.getAll();
 
-    it('getAllUsers', async () => {
-        service.getAll = mock;
-        await controller.getAll();
+            expect(mock).toBeCalledTimes(1);
+        });
+        it('should correctly process error', async () => {
+            service.getAll = errorMock;
 
-        expect(mock).toBeCalledTimes(1);
+            expect(controller.getAll()).rejects.toEqual(testError);
+        });
     });
-
-    it('getById', async () => {
+    describe('getById', () => {
         const testInput = 'id';
-        service.getById = mock;
-        await controller.getById(testInput);
+        it('should correctly process valid input', async () => {
+            service.getById = mock;
+            await controller.getById(testInput);
 
-        expect(mock).toBeCalledTimes(1);
-        expect(mock).toBeCalledWith(testInput);
+            expect(mock).toBeCalledTimes(1);
+            expect(mock).toBeCalledWith(testInput);
+        });
+        it('should correctly process error', async () => {
+            service.getById = errorMock;
+
+            expect(controller.getById(testInput)).rejects.toEqual(testError);
+        });
     });
-
-    it('getByLogin', async () => {
+    describe('getByLogin', () => {
         const testInput = 'login';
-        service.getByLogin = mock;
-        await controller.getByLogin(testInput);
+        it('should correctly process valid input', async () => {
+            service.getByLogin = mock;
+            await controller.getByLogin(testInput);
 
-        expect(mock).toBeCalledTimes(1);
-        expect(mock).toBeCalledWith(testInput);
+            expect(mock).toBeCalledTimes(1);
+            expect(mock).toBeCalledWith(testInput);
+        });
+        it('should correctly process error', async () => {
+            service.getByLogin = errorMock;
+
+            expect(controller.getByLogin(testInput)).rejects.toEqual(testError);
+        });
     });
-
-    it('change', async () => {
+    describe('change', () => {
         const testId = 'id';
         const testUser = {
             id: 'id',
@@ -57,29 +85,48 @@ describe('User Controller', () => {
             age: 10,
             isDeleted: true
         };
-        service.change = mock;
-        await controller.change(testId, testUser);
+        it('should correctly process valid input', async () => {
+            service.change = mock;
+            await controller.change(testId, testUser);
 
-        expect(mock).toBeCalledTimes(1);
-        expect(mock).toBeCalledWith(testId, testUser);
+            expect(mock).toBeCalledTimes(1);
+            expect(mock).toBeCalledWith(testId, testUser);
+        });
+        it('should correctly process error', async () => {
+            service.change = errorMock;
+
+            expect(controller.change(testId, testUser)).rejects.toEqual(testError);
+        });
     });
-
-    it('delete', async () => {
+    describe('delete', () => {
         const testInput = 'id';
-        service.delete = mock;
-        await controller.delete(testInput);
+        it('should correctly process valid input', async () => {
+            service.delete = mock;
+            await controller.delete(testInput);
 
-        expect(mock).toBeCalledTimes(1);
-        expect(mock).toBeCalledWith(testInput);
+            expect(mock).toBeCalledTimes(1);
+            expect(mock).toBeCalledWith(testInput);
+        });
+        it('should correctly process error', async () => {
+            service.delete = mock;
+
+            expect(controller.delete(testInput)).rejects.toEqual(testError);
+        });
     });
-
-    it('find', async () => {
+    describe('find', () => {
         const testId = 'id';
         const testLimit = 3;
-        service.find = mock;
-        await controller.find(testId, testLimit);
+        it('should correctly process valid input', async () => {
+            service.find = mock;
+            await controller.find(testId, testLimit);
 
-        expect(mock).toBeCalledTimes(1);
-        expect(mock).toBeCalledWith(testId, testLimit);
+            expect(mock).toBeCalledTimes(1);
+            expect(mock).toBeCalledWith(testId, testLimit);
+        });
+        it('should correctly process error', async () => {
+            service.find = errorMock;
+
+            expect(controller.find(testId, testLimit)).rejects.toEqual(testError);
+        });
     });
 });
