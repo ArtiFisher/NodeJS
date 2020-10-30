@@ -108,7 +108,7 @@ describe('User Controller', () => {
             expect(mock).toBeCalledWith(testInput);
         });
         it('should correctly process error', async () => {
-            service.delete = mock;
+            service.delete = errorMock;
 
             expect(controller.delete(testInput)).rejects.toEqual(testError);
         });
