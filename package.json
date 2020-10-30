@@ -56,6 +56,6 @@
     "winston": "^3.3.3"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/src/config/setupTests.js"
+    "setupFilesAfterEnv": ["<rootDir>/src/config/setupTests.ts"]
   }
 }

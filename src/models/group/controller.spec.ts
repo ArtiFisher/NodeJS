@@ -1,5 +1,8 @@
+
 import controller from './controller';
 import service from './service';
+// eslint-disable-next-line no-unused-vars
+import { IGroup } from './IGroup';
 
 describe('Group Controller', () => {
     const mock = jest.fn();
@@ -9,10 +12,10 @@ describe('Group Controller', () => {
     });
 
     it('add', async () => {
-        const testInput = {
+        const testInput: IGroup = {
             id: 'id',
             name: 'name',
-            permissions: ['read']
+            permissions: ['READ']
         };
         service.add = mock;
         await controller.add(testInput);
@@ -39,10 +42,10 @@ describe('Group Controller', () => {
 
     it('change', async () => {
         const testLogin = 'login';
-        const testGroup = {
+        const testGroup: IGroup = {
             id: 'id',
             name: 'name',
-            permissions: ['read']
+            permissions: ['READ']
         };
         service.change = mock;
         await controller.change(testLogin, testGroup);
@@ -61,7 +64,7 @@ describe('Group Controller', () => {
     });
 
     it('addUsers', async () => {
-        const testId = 'id';
+        const testId = 1;
         const testArray = [1, 2, 3];
         service.addUsers = mock;
         await controller.addUsers(testId, testArray);
