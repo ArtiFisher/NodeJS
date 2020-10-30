@@ -11,7 +11,7 @@ const router = Router();
 router
     .route('/')
     .post(asyncHandler(async (req: Request, res: Response) => {
-        const employee = (await user.service.getByLogin(req.body.login))[0];
+        const employee = (await user.controller.getByLogin(req.body.login))[0];
         if (!employee || employee.password !== req.body.password) {
             res.status(HttpStatus.UNAUTHORIZED).send({ message: 'Wrong login or password' });
         } else {
