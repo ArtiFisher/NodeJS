@@ -9,7 +9,8 @@ const logger = createLogger({
                 format.timestamp({ format: 'HH:mm:ss' }),
                 format.colorize(),
                 format.printf(({ level, timestamp, message }) => `${timestamp} ${level}: ${message}`)
-            )
+            ),
+            silent: process.env.NODE_ENV === 'test'
         })
     ]
 });

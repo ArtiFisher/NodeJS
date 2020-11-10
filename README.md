@@ -1,4 +1,6 @@
 `npm start` - starts server at port 5000
+`npm test` - runs tests silently
+`npm run coverage` - runs test showing tests coverage
 
 # CRUD operations
 
